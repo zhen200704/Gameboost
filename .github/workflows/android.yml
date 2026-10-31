@@ -26,25 +26,26 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Set up Gradle 8.7
+      - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.7"
 
       - name: Build APK
+        working-directory: ./GameBoostT606
         run: gradle --no-daemon assembleDebug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: GameBoostT606-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: GameBoostT606/app/build/outputs/apk/debug/app-debug.apk
 
       - name: Publish GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: app/build/outputs/apk/debug/app-debug.apk
+          files: GameBoostT606/app/build/outputs/apk/debug/app-debug.apk
           name: GameBoostT606 ${{ github.ref_name }}
           generate_release_notes: true
           
